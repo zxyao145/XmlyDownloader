@@ -1,0 +1,74 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:XmlyDownloader.Models;assembly=XmlyDownloader"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="XmlyDownloader.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+		Width="600" MinWidth="600"
+		Height="350" MinHeight="350"
+        Title="XmlyDownloader">
+	<Window.DataContext>
+		<vm:MainWindowViewModel></vm:MainWindowViewModel>
+	</Window.DataContext>
+	<Window.Resources>
+		<Style x:Key="ZxyTextBox" Selector="TextBox.zxyTextBox">
+			<!--<Setter Property="BorderBrush" Value="#FF7F9DB9"/>-->
+			<Setter Property="BorderThickness" Value="1"/>
+		</Style>
+		<Style x:Key="ContentCenterStyle" Selector="TextBlock.zxyTextBlock">
+			<Setter Property="HorizontalAlignment" Value="Center" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+		</Style>
+		
+	</Window.Resources>
+
+	<DockPanel LastChildFill="True" Margin="10">
+		<DockPanel DockPanel.Dock="Top" Margin="0,0,0,10">
+			<StackPanel Orientation="Horizontal">
+				<TextBlock VerticalAlignment="Center" Margin="0,0,8,0">专辑地址</TextBlock>
+				<TextBox  Classes="zxyTextBox"  x:Name="Url" Width="380" Text="{Binding Url}" ></TextBox>
+				<Button x:Name="Search" Command="{Binding SearchCommand}" CommandParameter="null" 
+						Margin="8,0,0,0" HorizontalAlignment="Right">搜索</Button>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Button x:Name="BtnDownload" Command="{Binding DownloadCommand}" Margin="8,0,0,0" HorizontalAlignment="Right">下载</Button>
+			</StackPanel>
+		</DockPanel>
+		<DockPanel DockPanel.Dock="Bottom" Margin="0,10,0,0">
+			<TextBlock x:Name="StatusLabel" VerticalAlignment="Center" Text="{Binding DownloadStatus}"/>
+		</DockPanel>
+		<DockPanel>
+			<DataGrid x:Name="SongDataGrid"
+		  Items="{Binding DownloadItems}"
+		  AutoGenerateColumns="False"
+		  IsReadOnly="True"
+		  ScrollViewer.VerticalScrollBarVisibility="Auto"
+		  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+		  HeadersVisibility="All">
+				<DataGrid.Columns>
+					<DataGridTemplateColumn Header="操作" Width="1*">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<CheckBox IsEnabled="{Binding Path=IsEnable }" IsChecked="{Binding Path=Selected }"></CheckBox>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTextColumn  Header="名称" Width="3*" Binding="{Binding Item.Title}">
+					</DataGridTextColumn>
+					<!--<DataGridTemplateColumn Header="下载" Width="1*" >
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate DataType="vm:DownloadItem">
+								<Button x:Name="BtnDownload"  Margin="8" Click="BtnDownload_OnClick" Background="AliceBlue" BorderBrush="Aqua"  CommandParameter="{Binding Path=Index}">下载</Button>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>-->
+				</DataGrid.Columns>
+			</DataGrid>
+		</DockPanel>
+	
+	
+	</DockPanel>
+</Window>
