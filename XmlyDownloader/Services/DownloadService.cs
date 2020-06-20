@@ -25,6 +25,8 @@ namespace XmlyDownloader.Services
 
         private string _saveDir = AppContext.BaseDirectory;
 
+        private string _saveSubDir1 = "1downloadResult";
+
         /// <summary>
         /// page parser client
         /// </summary>
@@ -162,7 +164,7 @@ namespace XmlyDownloader.Services
                         var bytes = await _downloadClient.GetByteArrayAsync(downloadUrl);
 
                         var file = Path.Combine
-                            (_saveDir, "xmlyDownloader",
+                            (_saveDir, _saveSubDir1,
                             item.DirName,
                             item.Index + "-" + item.Title + ".m4a");
 

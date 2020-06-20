@@ -28,13 +28,14 @@
 	<DockPanel LastChildFill="True" Margin="10">
 		<DockPanel DockPanel.Dock="Top" Margin="0,0,0,10">
 			<StackPanel Orientation="Horizontal">
-				<TextBlock VerticalAlignment="Center" Margin="0,0,8,0">专辑地址</TextBlock>
+				<TextBlock VerticalAlignment="Center" Margin="0,0,10,0">地址</TextBlock>
 				<TextBox  Classes="zxyTextBox"  x:Name="Url" Width="380" Text="{Binding Url}" ></TextBox>
 				<Button x:Name="Search" Command="{Binding SearchCommand}" CommandParameter="null" 
-						Margin="8,0,0,0" HorizontalAlignment="Right">搜索</Button>
+						Margin="8,0,0,0" HorizontalAlignment="Right"
+						 IsDefault="True" >搜索</Button>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
-				<Button x:Name="BtnDownload" Command="{Binding DownloadCommand}" Margin="8,0,0,0" HorizontalAlignment="Right">下载</Button>
+				<Button x:Name="BtnDownload" Command="{Binding DownloadCommand}" Margin="10,0,0,0" HorizontalAlignment="Right">下载</Button>
 			</StackPanel>
 		</DockPanel>
 		<DockPanel DockPanel.Dock="Bottom" Margin="0,10,0,0">
@@ -49,22 +50,15 @@
 		  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
 		  HeadersVisibility="All">
 				<DataGrid.Columns>
-					<DataGridTemplateColumn Header="操作" Width="1*">
+					<DataGridTemplateColumn Header="选择" Width="1*">
 						<DataGridTemplateColumn.CellTemplate>
 							<DataTemplate>
 								<CheckBox IsEnabled="{Binding Path=IsEnable }" IsChecked="{Binding Path=Selected }"></CheckBox>
 							</DataTemplate>
 						</DataGridTemplateColumn.CellTemplate>
 					</DataGridTemplateColumn>
-					<DataGridTextColumn  Header="名称" Width="3*" Binding="{Binding Item.Title}">
+					<DataGridTextColumn Header="名称" Width="3*" Binding="{Binding Item.Title}">
 					</DataGridTextColumn>
-					<!--<DataGridTemplateColumn Header="下载" Width="1*" >
-						<DataGridTemplateColumn.CellTemplate>
-							<DataTemplate DataType="vm:DownloadItem">
-								<Button x:Name="BtnDownload"  Margin="8" Click="BtnDownload_OnClick" Background="AliceBlue" BorderBrush="Aqua"  CommandParameter="{Binding Path=Index}">下载</Button>
-							</DataTemplate>
-						</DataGridTemplateColumn.CellTemplate>
-					</DataGridTemplateColumn>-->
 				</DataGrid.Columns>
 			</DataGrid>
 		</DockPanel>
