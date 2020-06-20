@@ -13,7 +13,7 @@ namespace XmlyDownloader.Models
     {
         IDownloadService _downloadService;
 
-        private string url = "https://www.ximalaya.com/xiangsheng/25335291/";
+        private string url; // = "https://www.ximalaya.com/xiangsheng/25335291/";
 
         public string Url
         {
