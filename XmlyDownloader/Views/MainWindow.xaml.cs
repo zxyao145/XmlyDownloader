@@ -20,6 +20,7 @@ namespace XmlyDownloader.Views
         private MainWindowViewModel vm;
         public MainWindow()
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
 
             this.DataContext = vm = new MainWindowViewModel();
