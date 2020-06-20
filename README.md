@@ -32,7 +32,7 @@
 
 ### 使用
 
-程序启动后界面如下图1所示，在专辑地址中输入专辑的url（例如图2，专辑郭德纲单口《丑娘娘》，https://www.ximalaya.com/xiangsheng/8287357/），点击搜索按钮，搜索结果如图3所示，专辑中的音频将会以表格的形式呈现出来。
+程序启动后界面如下图1所示，在专辑地址中输入专辑的url（例如图2，专辑郭德纲单口《丑娘娘》，https://www.ximalaya.com/xiangsheng/8287357/ ），点击搜索按钮，搜索结果如图3所示，专辑中的音频将会以表格的形式呈现出来。
 
 ![image-20200620164934047](https://github.com/zxyao145/XmlyDownloader/blob/master/mdfiles/start.png)
 
