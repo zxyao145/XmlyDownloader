@@ -34,21 +34,21 @@
 
 程序启动后界面如下图1所示，在专辑地址中输入专辑的url（例如图2，专辑郭德纲单口《丑娘娘》，https://www.ximalaya.com/xiangsheng/8287357/），点击搜索按钮，搜索结果如图3所示，专辑中的音频将会以表格的形式呈现出来。
 
-![image-20200620164934047](D:\coding\repos\XmlyDownloader\mdfiles\start.png)
+![image-20200620164934047](https://github.com/zxyao145/XmlyDownloader/blob/master/mdfiles/start.png)
 
 <Center>图1 启动界面</Center>
 
-![image-20200620165340869](D:\coding\repos\XmlyDownloader\mdfiles\专辑示例.png)
+![image-20200620165340869](https://github.com/zxyao145/XmlyDownloader/blob/master/mdfiles/专辑示例.png)
 
 <Center>图2 专辑示例</Center>
 
-![image-20200620165513485](D:\coding\repos\XmlyDownloader\mdfiles\搜索结果.png)
+![image-20200620165513485](https://github.com/zxyao145/XmlyDownloader/blob/master/mdfiles/搜索结果.png)
 
 <Center>图3  专辑搜索结果</Center>
 
 在搜索结果左侧，勾选想要下载的音频，然后点击下载。下载文件将保存在程序运行目录下 **xmlyDownloader/专辑名** 的文件夹中，此处下载结果保存在 **xmlyDownloader/【高清】郭德纲单口《丑娘娘》**文件夹中，如图4所示：
 
-![image-20200620170346355](D:\coding\repos\XmlyDownloader\mdfiles\下载结果.png)
+![image-20200620170346355](https://github.com/zxyao145/XmlyDownloader/blob/master/mdfiles/下载结果.png)
 
 
 
