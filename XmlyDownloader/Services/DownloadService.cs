@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using Jil;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace XmlyDownloader.Services
         public event Action<DownloadItem> OnDownloaded;
 
 
-        private Queue<DownloadItem> _downloadQueue = new Queue<DownloadItem>();
+        private ConcurrentQueue<DownloadItem> _downloadQueue = new ConcurrentQueue<DownloadItem>();
         private List<DownloadItem> _searchResult = new List<DownloadItem>();
 
         private string _saveDir = AppContext.BaseDirectory;
@@ -104,7 +105,8 @@ namespace XmlyDownloader.Services
             if (node != null)
             {
                 var aArr = node.SelectNodes("./ul/li//a");
-                int index = 0;
+                int index = 30;
+
                 foreach (var a in aArr)
                 {
                     var title = a.Attributes["title"].Value;
@@ -129,7 +131,10 @@ namespace XmlyDownloader.Services
                             if (page != null)
                             {
                                 var href = page.Attributes["href"].Value;
-                                await ParsePagingInfoHandle(href, httpClient, page);
+                                if(href != url.Replace("https://www.ximalaya.com",""))
+                                {
+                                    await ParsePagingInfoHandle(href, httpClient, page);
+                                }
                             }
                         }
                     }
@@ -138,7 +143,6 @@ namespace XmlyDownloader.Services
         }
 
         private bool _hasStopd = false;
-
 
         public Task StartListenDownload()
         {
@@ -156,33 +160,41 @@ namespace XmlyDownloader.Services
                     }
                     else
                     {
-                        var item = _downloadQueue.Dequeue();
-                        var jsonStr = await xmlyClicnt.GetStringAsync(item.Href);
-
-                        var downloadUrl = GetM4a(jsonStr);
-
-                        var bytes = await _downloadClient.GetByteArrayAsync(downloadUrl);
-
-                        var file = Path.Combine
-                            (_saveDir, _saveSubDir1,
-                            item.DirName,
-                            item.Index + "-" + item.Title + ".m4a");
-
-                        var dir = Path.GetDirectoryName(file);
-                        if (!Directory.Exists(dir))
+                        if (_downloadQueue.TryDequeue(out var item))
                         {
-                            Directory.CreateDirectory(dir);
+                            var jsonStr = await xmlyClicnt.GetStringAsync(item.Href);
+
+                            var downloadUrl = GetM4a(jsonStr);
+
+                            var bytes = await _downloadClient.GetByteArrayAsync(downloadUrl);
+                            if (bytes == null)
+                            {
+                                _downloadQueue.Enqueue(item);
+                                Console.WriteLine($"{item.Title} 下载失败");
+                                continue;
+                            }
+                            var file = Path.Combine
+                                (_saveDir, _saveSubDir1,
+                                item.DirName,
+                                item.Index + "-" + item.Title + ".m4a");
+
+                            var dir = Path.GetDirectoryName(file);
+                            if (!Directory.Exists(dir))
+                            {
+                                Directory.CreateDirectory(dir);
+                            }
+                            else if (File.Exists(file))
+                            {
+                                continue;
+                                //File.Delete(file);
+                            }
+                            await using var fs = new System.IO.FileStream(file, System.IO.FileMode.CreateNew);
+                            fs.Write(bytes, 0, bytes.Length);
+                            //暂停 200 ~ 3200毫秒
+                            int sleepTime = 200; // = (int)(rand.NextDouble() * 3 * 1000 + 200);
+                            OnDownloaded?.Invoke(item);
+                            Thread.Sleep(sleepTime);
                         }
-                        else if (File.Exists(file))
-                        {
-                            File.Delete(file);
-                        }
-                        await using var fs = new System.IO.FileStream(file, System.IO.FileMode.CreateNew);
-                        fs.Write(bytes, 0, bytes.Length);
-                        //暂停 200 ~ 3200毫秒
-                        int sleepTime = (int)(rand.NextDouble() * 3 * 1000 + 200);
-                        OnDownloaded?.Invoke(item);
-                        Thread.Sleep(sleepTime);
                     }
                 }
                 _hasStopd = true;
