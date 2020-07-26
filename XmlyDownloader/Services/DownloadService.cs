@@ -79,6 +79,7 @@ namespace XmlyDownloader.Services
         public async Task<List<DownloadItem>> ParsePagingInfo(string url)
         {
             _searchResult.Clear();
+
             await ParsePagingInfoHandle(url, xmlyClicnt);
 
             return _searchResult;
@@ -91,7 +92,8 @@ namespace XmlyDownloader.Services
         /// <param name="httpClient"></param>
         /// <param name="pageNode"></param>
         /// <returns></returns>
-        private async Task ParsePagingInfoHandle(string url, HttpClient httpClient, HtmlNode pageNode = null)
+        private async Task<int> ParsePagingInfoHandle(string url, HttpClient httpClient,
+            HtmlNode pageNode = null, int index = 0)
         {
             var text = await httpClient.GetStringAsync(url);
 
@@ -105,7 +107,6 @@ namespace XmlyDownloader.Services
             if (node != null)
             {
                 var aArr = node.SelectNodes("./ul/li//a");
-                int index = 30;
 
                 foreach (var a in aArr)
                 {
@@ -133,23 +134,27 @@ namespace XmlyDownloader.Services
                                 var href = page.Attributes["href"].Value;
                                 if(href != url.Replace("https://www.ximalaya.com",""))
                                 {
-                                    await ParsePagingInfoHandle(href, httpClient, page);
+                                    index = await ParsePagingInfoHandle(href, httpClient, page, index);
                                 }
                             }
                         }
                     }
                 }
             }
+
+            return index;
         }
 
         private bool _hasStopd = false;
+
+        
 
         public Task StartListenDownload()
         {
             _hasStopd = false;
             _stop = false;
 
-            return Task.Run(async () =>
+            return Task.Factory.StartNew(async () =>
             {
                 var rand = new Random();
                 while (!_stop)
@@ -162,43 +167,47 @@ namespace XmlyDownloader.Services
                     {
                         if (_downloadQueue.TryDequeue(out var item))
                         {
-                            var jsonStr = await xmlyClicnt.GetStringAsync(item.Href);
+                            StreamWriter sw = new StreamWriter("./log.txt", append: true);
+                            await sw.WriteLineAsync($"{item.Index}\t{item.Title} {item.Href}");
+                            sw.Close();
 
-                            var downloadUrl = GetM4a(jsonStr);
+                            //var jsonStr = await xmlyClicnt.GetStringAsync(item.Href);
 
-                            var bytes = await _downloadClient.GetByteArrayAsync(downloadUrl);
-                            if (bytes == null)
-                            {
-                                _downloadQueue.Enqueue(item);
-                                Console.WriteLine($"{item.Title} 下载失败");
-                                continue;
-                            }
-                            var file = Path.Combine
-                                (_saveDir, _saveSubDir1,
-                                item.DirName,
-                                item.Index + "-" + item.Title + ".m4a");
+                            //var downloadUrl = GetM4a(jsonStr);
 
-                            var dir = Path.GetDirectoryName(file);
-                            if (!Directory.Exists(dir))
-                            {
-                                Directory.CreateDirectory(dir);
-                            }
-                            else if (File.Exists(file))
-                            {
-                                continue;
-                                //File.Delete(file);
-                            }
-                            await using var fs = new System.IO.FileStream(file, System.IO.FileMode.CreateNew);
-                            fs.Write(bytes, 0, bytes.Length);
-                            //暂停 200 ~ 3200毫秒
-                            int sleepTime = 200; // = (int)(rand.NextDouble() * 3 * 1000 + 200);
+                            //var bytes = await _downloadClient.GetByteArrayAsync(downloadUrl);
+                            //if (bytes == null)
+                            //{
+                            //    _downloadQueue.Enqueue(item);
+                            //    Console.WriteLine($"{item.Title} 下载失败");
+                            //    continue;
+                            //}
+                            //var file = Path.Combine
+                            //    (_saveDir, _saveSubDir1,
+                            //    item.DirName,
+                            //    item.Index + "-" + item.Title + ".m4a");
+
+                            //var dir = Path.GetDirectoryName(file);
+                            //if (!Directory.Exists(dir))
+                            //{
+                            //    Directory.CreateDirectory(dir);
+                            //}
+                            //else if (File.Exists(file))
+                            //{
+                            //    continue;
+                            //    //File.Delete(file);
+                            //}
+                            //await using var fs = new System.IO.FileStream(file, System.IO.FileMode.CreateNew);
+                            //fs.Write(bytes, 0, bytes.Length);
+                            ////暂停 200 ~ 3200毫秒
+                            //int sleepTime = 200; // = (int)(rand.NextDouble() * 3 * 1000 + 200);
                             OnDownloaded?.Invoke(item);
-                            Thread.Sleep(sleepTime);
+                            //Thread.Sleep(sleepTime);
                         }
                     }
                 }
                 _hasStopd = true;
-            });
+            }, TaskCreationOptions.LongRunning);
         }
 
         public void StopDownload()
