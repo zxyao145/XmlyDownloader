@@ -1,27 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>0.2.0</Version>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Update="**\*.xaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
-    <AvaloniaResource Include="**\*.xaml">
-      <SubType>Designer</SubType>
-    </AvaloniaResource>
-    <AvaloniaResource Include="Assets\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.9.11" />
-    <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.9.11" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.9.11" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.11" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.24" />
-    <PackageReference Include="Jil" Version="2.17.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<Version>0.3.0</Version>
+		<SelfContained>true</SelfContained>
+		<PublishSingleFile>True</PublishSingleFile>
+		<DebugType>embedded</DebugType>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Update="**\*.xaml.cs">
+			<DependentUpon>%(Filename)</DependentUpon>
+		</Compile>
+		<AvaloniaResource Include="**\*.xaml">
+			<SubType>Designer</SubType>
+		</AvaloniaResource>
+		<AvaloniaResource Include="Assets\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="0.9.12" />
+		<PackageReference Include="Avalonia.Controls.DataGrid" Version="0.9.12" />
+		<PackageReference Include="Avalonia.Desktop" Version="0.9.12" />
+		<PackageReference Include="Avalonia.ReactiveUI" Version="0.9.12" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.25" />
+		<PackageReference Include="Jil" Version="2.17.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Properties\" />
+	</ItemGroup>
 </Project>

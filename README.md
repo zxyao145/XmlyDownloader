@@ -52,6 +52,10 @@
 
 <Center>图4 下载结果</Center>
 
+**注** 如果在Linux上运行，首先需要赋予程序执行权限，最简单的方式：`sudo chmod 777 ./XmlyDownloader`。Ubuntu16.04上运行效果如图5所示。
+![Ubuntu16.04运行效果](https://github.com/zxyao145/XmlyDownloader/blob/master/mdfiles/Ubuntu16.04.png)
+<Center>图5 Ubuntu16.04运行效果</Center>
+
 # 协议
 
 MIT。本工具仅限个人学习，不用于商业等用途，所涉及的所有音视频资源版权归喜马拉雅所有。

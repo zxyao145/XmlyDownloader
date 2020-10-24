@@ -5,11 +5,14 @@
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
-
+	
     <Application.Styles>
         <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
         <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
 		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Default.xaml"/>
-	
+
+		<Style  Selector="Window">
+			<Setter Property="FontFamily" Value="/Assets/SourceHanSansSC-Normal.otf#Source Han Sans SC"></Setter>
+		</Style>
 	</Application.Styles>
 </Application>
