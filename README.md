@@ -38,13 +38,19 @@
 
 <Center>图1 启动界面</Center>
 
+&nbsp; 
+
 ![image-20200620165340869](https://github.com/zxyao145/XmlyDownloader/blob/master/mdfiles/专辑示例.png)
 
 <Center>图2 专辑示例</Center>
 
+&nbsp; 
+
 ![image-20200620165513485](https://github.com/zxyao145/XmlyDownloader/blob/master/mdfiles/搜索结果.png)
 
 <Center>图3  专辑搜索结果</Center>
+
+&nbsp; 
 
 在搜索结果左侧，勾选想要下载的音频，然后点击下载。下载文件将保存在程序运行目录下 **1downloadResult/专辑名** 的文件夹中，此处下载结果保存在 **1downloadResult/【高清】郭德纲单口《丑娘娘》** 文件夹中，如图4所示：
 
@@ -52,9 +58,15 @@
 
 <Center>图4 下载结果</Center>
 
+&nbsp; 
+
 **注** 如果在Linux上运行，首先需要赋予程序执行权限，最简单的方式：`sudo chmod 777 ./XmlyDownloader`。Ubuntu16.04上运行效果如图5所示。
+
 ![Ubuntu16.04运行效果](https://github.com/zxyao145/XmlyDownloader/blob/master/mdfiles/Ubuntu16.04.png)
+
 <Center>图5 Ubuntu16.04运行效果</Center>
+
+&nbsp; 
 
 # 协议
 
