@@ -1,7 +1,7 @@
 # XmlyDownloader
-喜马拉雅专辑下载器，基于NET Core 3.1 和 Avalonia UI，支持Windows、MacOS、Linux（由于Avalonia的问题，在MacOS、Linux下中文会显示乱码[https://github.com/AvaloniaUI/Avalonia/issues/3522](https://github.com/AvaloniaUI/Avalonia/issues/3522)）。
+喜马拉雅专辑下载器，基于NET Core 3.1 和 Avalonia UI，支持Windows、MacOS、Linux~~（由于Avalonia的问题，在MacOS、Linux下中文会显示乱码[https://github.com/AvaloniaUI/Avalonia/issues/3522](https://github.com/AvaloniaUI/Avalonia/issues/3522)）~~ (已修复)。
 
-注意：仅能够下载免费音频。
+**注意**：仅能够下载免费音频。
 
 # 平台支持
 
